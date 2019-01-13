@@ -4,7 +4,7 @@ function importAll (r) {
   r.keys().forEach(key => cache[key] = r(key));
 }
 
-importAll(require.context('file-loader!../assets/video', true, /\.mp4$/));
+importAll(require.context('../assets/video', true, /\.mp4$/));
 
 const videos = [];
 

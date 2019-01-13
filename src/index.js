@@ -1,4 +1,4 @@
-const thumbnailsTemplate = require('./templates/thumbnails.ejs');
+const thumbnailTemplate = require('./templates/thumbnail.ejs');
 const slideshowTemplate = require('./templates/slideshow.ejs');
 const sidebarTemplate = require('./templates/sidebar.ejs');
 
@@ -9,39 +9,37 @@ require('./styles/index.scss');
 
 const json = require('./contentMetaData.json');
 
+const $loading = $('#loadingCover').hide();
+
 $(function() {
-    // hacky way to see what images are on the server without doing a cross-origin request
-    function imageExists(url) {
-        const img = new Image();
-        img.src = url;
-        const res = img.height !== 0
-        return res;
+    const cache = {};
+    // fetch only the decks we've loaded
+    const presentations = []
+
+    for (let i = 0; json.content.length > i; i++) {
+      const src = 'https://abiomedtraining.com/ACE/2.0/decks/' + json.content[i].vaultId + '/thumbnails/1.PNG';
+      const img = new Image();
+      img.onload = function () {
+        // we now load the thumbs one by one
+        presentations.push(src);
+        const thumbsHtml = thumbnailTemplate({ entry: json.content[i] });
+        $('.content').append(thumbsHtml);
+      }
+      img.onerror = function () {}
+      img.src = src;
     }
 
-    // fetch only the decks we've loaded
-    const presentations = json.content.filter(function(entry) {
-        const src = 'https://abiomedtraining.com/ACE/2.0/decks/' + entry.vaultId + '/thumbnails/1.PNG';
-        if (imageExists(src)) {
-            return entry;
-        }
-    });
-
     // populate slideshow cache
-    const cache = {};
-    for (let key in presentations) {
-      const id = presentations[key].vaultId;
+    for (let key in json.content) {
+      const id = json.content[key].vaultId;
       cache[id] = [];
     }
 
-    // thumbnails
-    const thumbsHtml = thumbnailsTemplate({ slides: presentations });
-    $('.content').append(thumbsHtml);
-
     // add test video thumbnail
     const videoThumbHtml = `
-      <div id="video" class="large-thumb" data-slide="IMP-264" style="box-shadow:5px 5px 5px #999;">
+      <div id="video" class="large-thumb" data-slide="IMP-264" style="box-shadow:5px 5px 5px #000000;">
         <video style="width: 310px; height: 198px;border: 0;padding: 5px">
-          <source src="${require('file-loader!./assets/video/1. Impella Family Animation.mp4')}">
+          <source src="${require('./assets/video/1. Impella Family Animation.mp4')}">
         </video>
         <p>Video Test</p>
         <p>IMP-264</p>
@@ -66,14 +64,16 @@ $(function() {
         });
     });
 
-    // slideshow
-    $('.large-thumb').not('#video').click(function() {
-        const id = $(this).data('slide');
-        playSlideshow(id);
-        $('.slider-container').show();
-        console.log('start slideshow');
+
+    // delegate slide show function
+    $(document).on('click', '.large-thumb:not(#video)', function() {
+      console.log('click');
+      const id = $(this).data('slide');
+      playSlideshow(id);
+      $('.slider-container').show();
     });
 
+    // video slideshow
     $('#video').click(function () {
       prepareSlideshow(videoTemplate);
       $('.slider-container').show();
@@ -90,6 +90,7 @@ $(function() {
     }
 
     const playSlideshow = function(id) {
+      $loading.show();
       // need a more robust image checker
       function checkImages(i, callback) {
         let url = 'https://abiomedtraining.com/ACE/2.0/decks/' + id + '/' + i + '.PNG';
@@ -112,11 +113,13 @@ $(function() {
         checkImages(index, function (slides) {
           const html = slideshowTemplate({ id, slides });
           prepareSlideshow(html);
+          $loading.hide();
         });
       } else {
         // otherwise pull from cache
         const html = slideshowTemplate({ id, slides: cache[id] });
         prepareSlideshow(html);
+        $loading.hide();
       }
     }
 });
