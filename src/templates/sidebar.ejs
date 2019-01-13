@@ -1,0 +1,21 @@
+<nav class="vertical-nav">
+	<% categories.forEach(function (category, i) { %>
+		<div class="category">
+			<% if (category.categories) { %>
+			<input id="tab-<%= i %>" type="checkbox" name="tabs">
+			<label for="tab-<%= i %>"><%= category.name %></label>
+			<% } else { %>
+				<label for="tab-<%= i %>" id="category" data-content="<%= category.content %>"><%= category.name %></label>
+			<% } %>
+			<% if (category.categories) { %>
+			<div class="category-content">
+				<ul>
+					<% category.categories.forEach(function (subcategory) { %>
+					<li id="category" data-content="<%= subcategory.content %>"><%= subcategory.name %></li>
+					<% }); %>
+				</ul>
+			</div>
+		<% } %>
+		</div>
+	<% }); %>
+</nav>

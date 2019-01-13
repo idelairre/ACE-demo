@@ -1,0 +1,17 @@
+<header>
+    <div>
+        <a id="close-btn" href="#">x</a>
+    </div>
+</header>
+<div id="cbp-fwslider" class="cbp-fwslider">
+    <ul>
+        <!-- Each child div in #showcase represents a slide -->
+        <% videos.forEach(function (video, i) { %>
+        <li>
+            <video controls>
+                <source src="<%= video %>">
+            </video>
+        </li>
+        <% }) %>
+    </ul>
+</div>

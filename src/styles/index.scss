@@ -1,0 +1,349 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+.social-btn__github {
+    background-image: url("https://getmdl.io/assets/github_white_24.svg"); // yoink
+    display: block;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: #424242;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+body {
+    color: #777;
+}
+
+body,
+html {
+    height: 100%;
+}
+
+.pure-img-responsive {
+    max-width: 100%;
+    height: auto;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.wrapper {
+    display: flex;
+    height: 100%;
+    flex-flow: column;
+    justify-content: space-between;
+}
+
+.header {
+    padding: 20px;
+    flex: 0 0 100px;
+}
+
+.header img {
+    height: 50px;
+}
+
+.footer {
+    background: #005BA6;
+    height: 80px;
+    padding: 10px;
+}
+
+.main {
+    flex: 1 1 auto;
+    display: flex;
+    flex-flow: row;
+}
+
+.content {
+    text-align: left;
+    background: deepskyblue;
+    flex: 2;
+    padding: 10px;
+    overflow: auto;
+}
+
+.vertical-nav {
+    background: navy;
+    flex: 0 280px;
+    padding: 10px;
+}
+/* Acordion styles */
+.category {
+    position: relative;
+    margin-bottom: 1px;
+    width: 100%;
+    color: #fff;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+input {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+}
+
+label {
+    position: relative;
+    display: block;
+    padding: 0 0 0 1em;
+    background: #16a085;
+    font-family: Roboto,sans-serif;
+    line-height: 3;
+    cursor: pointer;
+}
+
+.category-content {
+    max-height: 0;
+    overflow: hidden;
+    background: #1abc9c;
+    -webkit-transition: max-height 0.35s;
+    -o-transition: max-height 0.35s;
+    transition: max-height 0.35s;
+}
+
+.category-content p {
+    margin: 1em;
+}
+
+.category-content ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.category-content ul li {
+    margin: 8px 0;
+}
+/* :checked */
+input:checked ~ .category-content {
+    max-height: 11em;
+}
+/* Icon */
+label::after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    width: 3em;
+    height: 3em;
+    line-height: 3;
+    text-align: center;
+    -webkit-transition: all 0.35s;
+    -o-transition: all 0.35s;
+    transition: all 0.35s;
+}
+
+input[type=checkbox] + label::after {
+    content: "+";
+}
+
+input[type=checkbox]:checked + label::after {
+    transform: rotate(315deg);
+}
+/* We rely on source order for mobile-first approach
+ * in this case:
+ * 1. header
+ * 2. article
+ * 3. aside 1
+ * 4. aside 2
+ * 5. footer
+ */
+/* thumbnail gallery */
+
+.large-thumb {
+    width: 310px;
+    height: 280px;
+    background-color: white;
+    display: inline-block;
+    margin: 18px;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+.large-thumb img {
+    padding: 5px;
+}
+
+.large-thumb p {
+    text-align: center;
+    padding: 5px;
+    margin: 0;
+}
+
+.large-thumb p:first-of-type {
+    font-size: 90%;
+}
+/* General Demo Style */
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
+@font-face {
+    font-family: 'fontawesome';
+    // src: url("../fonts/fontawesome.eot");
+    // src: url("../fonts/fontawesome.eot?#iefix") format('embedded-opentype'), url("../fonts/fontawesome.svg#fontawesome") format('svg'), url("../fonts/fontawesome.woff") format('woff'), url("../fonts/fontawesome.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+/* Clearfix hack by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
+.clearfix:after,
+.clearfix:before {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.slider-container {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background: white;
+    display: none;
+}
+
+.slider-container > header {
+    position: absolute;
+    top: 0;
+    z-index: 2;
+}
+
+.slider-container > header div {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    background-color: gray;
+    border-radius: 15px;
+    margin: 5px;
+}
+
+.slider-container > header a {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.cbp-fwslider {
+    position: relative;
+    overflow: hidden;
+}
+
+.cbp-fwslider ul {
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    list-style-type: none;
+}
+
+.cbp-fwslider ul li {
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    transform: translateZ(0);
+    float: left;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.cbp-fwslider ul li > a,
+.cbp-fwslider ul li > div {
+    display: block;
+    text-align: center;
+    outline: none;
+}
+
+.cbp-fwslider ul li > img,
+video {
+    border: none;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: 100vh;
+}
+
+.cbp-fwslider nav span {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 100px;
+    background: #47a3da;
+    color: #fff;
+    font-size: 50px;
+    text-align: center;
+    line-height: 100px;
+    cursor: pointer;
+    font-weight: normal;
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    z-index: 2;
+}
+
+.cbp-fwslider nav span:hover {
+    background: #378fc3;
+}
+
+.cbp-fwslider nav span.cbp-fwnext {
+    right: 0;
+}
+
+.cbp-fwslider nav span.cbp-fwprev {
+    left: 0;
+}
+
+.cbp-fwdots {
+    position: absolute;
+    bottom: 0;
+    white-space: nowrap;
+    text-align: center;
+    width: 100%;
+}
+
+.cbp-fwdots span {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background: #ddd;
+    margin: 4px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.cbp-fwdots span:hover {
+    background: #999;
+}
+
+.cbp-fwdots span.cbp-fwcurrent {
+    background: #47a3da;
+    box-shadow: 0 0 0 2px #47a3da;
+    -webkit-transition: box-shadow 0.2s ease-in-out;
+    -moz-transition: box-shadow 0.2s ease-in-out;
+    transition: box-shadow 0.2s ease-in-out;
+}
+@media only screen and (max-width: 767px) {
+    .slider-container {
+        height: 100vh;
+    }
+
+    .cbp-fwslider {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .cbp-fwslider ul li > img,
+    video {
+        width: 100%;
+        height: auto;
+    }
+
+    .cbp-fwslider nav span {
+        width: 30px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 24px;
+    }
+}
