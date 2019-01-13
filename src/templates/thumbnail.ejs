@@ -1,6 +1,6 @@
 <% var src = 'https://abiomedtraining.com/ACE/2.0/decks/' + entry.vaultId + '/thumbnails/1.PNG' %>
-<div class="large-thumb" title="<%= entry.vaultId %>" data-slide="<%= entry.vaultId %>" style="box-shadow:5px 5px 5px #000000;">
+<div class="large-thumb" data-slide="<%= entry.vaultId %>" style="box-shadow:5px 5px 5px #000000;">
   <img id="thumb-<%= entry.vaultId %>" style="width: 310px; height: 198px;" src="<%= src %>" />
-  <p><%= entry.filename %></p>
-  <p><%= entry.vaultId %></p>
+  <p class="thumb-filename"><%= entry.filename %></p>
+  <p class="thumb-vault-id"><%= entry.vaultId %></p>
 </div>

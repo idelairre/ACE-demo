@@ -1,5 +1,24 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
+// new styles
+
+.header {
+  cursor: pointer;
+}
+
+.thumb-filename {
+  font-family: Roboto,sans-serif;
+  font-size: 1.20rem;
+  font-weight: 500;
+  letter-spacing: .0125em;
+  color: black;
+  line-height: 2rem;
+}
+
+.thumb-vault-id {
+
+}
+
 .social-btn__github {
     background-image: url("https://getmdl.io/assets/github_white_24.svg"); // yoink
     display: block;
@@ -10,6 +29,7 @@
     width: 24px;
     height: 24px;
     cursor: pointer;
+    margin-top: 5px;
 }
 
 .centered {
@@ -29,6 +49,13 @@
     width: 100%;
     height: 100%;
 }
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+      to { opacity: 1; }
+}
+
+// old styles
 
 body {
     color: #777;
@@ -183,6 +210,8 @@ input[type=checkbox]:checked + label::after {
     margin: 18px;
     vertical-align: top;
     cursor: pointer;
+    border-radius: 4px;
+    animation: fadeIn 250ms ease-in-out both;
 }
 
 .large-thumb img {
@@ -190,13 +219,13 @@ input[type=checkbox]:checked + label::after {
 }
 
 .large-thumb p {
+    padding-top: 2px;
     text-align: center;
-    padding: 5px;
     margin: 0;
 }
 
 .large-thumb p:first-of-type {
-    font-size: 90%;
+    font-size: 95%;
 }
 /* General Demo Style */
 @import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);

@@ -12,7 +12,14 @@ const json = require('./contentMetaData.json');
 const $loading = $('#loadingCover').hide();
 
 $(function() {
+    // slides cache for presentations
     const cache = {};
+
+    for (let key in json.content) {
+      const id = json.content[key].vaultId;
+      cache[id] = [];
+    }
+
     // fetch only the decks we've loaded
     const presentations = []
 
@@ -29,20 +36,14 @@ $(function() {
       img.src = src;
     }
 
-    // populate slideshow cache
-    for (let key in json.content) {
-      const id = json.content[key].vaultId;
-      cache[id] = [];
-    }
-
     // add test video thumbnail
     const videoThumbHtml = `
       <div id="video" class="large-thumb" data-slide="IMP-264" style="box-shadow:5px 5px 5px #000000;">
         <video style="width: 310px; height: 198px;border: 0;padding: 5px">
           <source src="${require('./assets/video/1. Impella Family Animation.mp4')}">
         </video>
-        <p>Video Test</p>
-        <p>IMP-264</p>
+        <p class="thumb-filename">Video Test</p>
+        <p class="thumb-vault-id">IMP-264</p>
       </div>`
     $('.content').prepend(videoThumbHtml);
 
@@ -64,6 +65,10 @@ $(function() {
         });
     });
 
+    // undo filter
+    $('.header').click(function() {
+      $('.large-thumb').show();
+    });
 
     // delegate slide show function
     $(document).on('click', '.large-thumb:not(#video)', function() {
