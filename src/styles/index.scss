@@ -2,6 +2,16 @@
 
 // new styles
 
+.mdl-card {
+  display: inline-block;
+  width: 320px;
+  height: 320px;
+}
+
+.mdl-card__title-text {
+  background: rgba(0, 0, 0, 0.2);
+}
+
 .header {
   cursor: pointer;
 }
@@ -12,7 +22,9 @@
   font-weight: 500;
   letter-spacing: .0125em;
   color: black;
-  line-height: 2rem;
+  line-height: 1.5rem;
+  padding-top: 10px !important;
+  // padding-bottom: 5px;
 }
 
 .thumb-vault-id {
@@ -53,6 +65,11 @@
 @keyframes fadeIn {
     from { opacity: 0; }
       to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+      to { opacity: 0; }
 }
 
 // old styles
@@ -115,6 +132,7 @@ html {
     background: #07366c;
     flex: 0 280px;
     padding: 10px;
+    overflow: auto;
 }
 /* Acordion styles */
 .category {
@@ -211,21 +229,23 @@ input[type=checkbox]:checked + label::after {
     vertical-align: top;
     cursor: pointer;
     border-radius: 4px;
-    animation: fadeIn 250ms ease-in-out both;
+    animation: fadeIn 250ms ease-in-out alternate;
 }
 
-.large-thumb img {
-    padding: 5px;
+.large-thumb img, video {
+    // padding: 5px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
 }
 
 .large-thumb p {
-    padding-top: 2px;
+    // padding-top: 2px;
     text-align: center;
     margin: 0;
 }
 
 .large-thumb p:first-of-type {
-    font-size: 95%;
+    font-size: 100%;
 }
 /* General Demo Style */
 @import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);

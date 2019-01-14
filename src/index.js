@@ -1,6 +1,9 @@
+const { intersection } = require('lodash');
+
 const thumbnailTemplate = require('./templates/thumbnail.ejs');
 const slideshowTemplate = require('./templates/slideshow.ejs');
 const sidebarTemplate = require('./templates/sidebar.ejs');
+const videoThumbnailTemplate = require('./templates/videoThumbnail.ejs');
 
 const videoTemplate = require('./templates/video.js');
 
@@ -20,6 +23,23 @@ $(function() {
       cache[id] = [];
     }
 
+    // add test video thumbnail
+    $('.content').prepend(videoThumbnailTemplate());
+
+    // load sidebar
+    const sidebarHtml = sidebarTemplate({ categories: json.categories });
+    $('.main').prepend(sidebarHtml);
+
+    // hide sidebar until we populate slides
+    $('label#category, li#category').each(function() {
+      if ($(this).prop('tagName') === 'LI') {
+        $(this).hide();
+        $(this).parents('.category-content').siblings('label').hide();
+      } else {
+        $(this).hide();
+      }
+    })
+
     // fetch only the decks we've loaded
     const presentations = []
 
@@ -27,29 +47,26 @@ $(function() {
       const src = 'https://abiomedtraining.com/ACE/2.0/decks/' + json.content[i].vaultId + '/thumbnails/1.PNG';
       const img = new Image();
       img.onload = function () {
-        // we now load the thumbs one by one
+        // we now load the thumbs one by one instead of all at once
         presentations.push(src);
         const thumbsHtml = thumbnailTemplate({ entry: json.content[i] });
         $('.content').append(thumbsHtml);
+        // populate categories as we load slides
+        $('label#category, li#category').each(function () {
+          const slides = $(this).data('content').split(',');
+          if (slides.includes(json.content[i].vaultId)) {
+            $(this).show();
+            if ($(this).prop('tagName') === 'LI') {
+              $(this).parents('.category-content').siblings('label').show();
+            }
+          }
+        });
       }
-      img.onerror = function () {}
+      img.onerror = function () {
+        delete cache[json.content[i].vaultId];
+      }
       img.src = src;
     }
-
-    // add test video thumbnail
-    const videoThumbHtml = `
-      <div id="video" class="large-thumb" data-slide="IMP-264" style="box-shadow:5px 5px 5px #000000;">
-        <video style="width: 310px; height: 198px;border: 0;padding: 5px">
-          <source src="${require('./assets/video/1. Impella Family Animation.mp4')}">
-        </video>
-        <p class="thumb-filename">Video Test</p>
-        <p class="thumb-vault-id">IMP-264</p>
-      </div>`
-    $('.content').prepend(videoThumbHtml);
-
-    // sidebar
-    const sidebarHtml = sidebarTemplate({ categories: json.categories });
-    $('.main').prepend(sidebarHtml);
 
     // filter items
     $('label#category, li#category').each(function() {
@@ -57,7 +74,7 @@ $(function() {
             const slides = $(this).data('content');
             $('.large-thumb').each(function() {
                 if (!slides.includes($(this).data('slide'))) {
-                    $(this).hide();
+                    $(this).fadeOut('250');
                 } else {
                     $(this).show();
                 }
@@ -72,7 +89,6 @@ $(function() {
 
     // delegate slide show function
     $(document).on('click', '.large-thumb:not(#video)', function() {
-      console.log('click');
       const id = $(this).data('slide');
       playSlideshow(id);
       $('.slider-container').show();
