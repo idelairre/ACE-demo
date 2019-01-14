@@ -5,7 +5,7 @@ const slideshowTemplate = require('./templates/slideshow.ejs');
 const sidebarTemplate = require('./templates/sidebar.ejs');
 const videoThumbnailTemplate = require('./templates/videoThumbnail.ejs');
 
-const videoTemplate = require('./templates/video.js');
+//const videoTemplate = require('./templates/video.js');
 
 require('./js/jquery.cbpFWSlider');
 require('./styles/index.scss');
@@ -14,7 +14,9 @@ const json = require('./contentMetaData.json');
 
 const $loading = $('#loadingCover').hide();
 
+
 $(function() {
+
     // slides cache for presentations
     const cache = {};
 
@@ -109,36 +111,32 @@ $(function() {
     }
 
     const playSlideshow = function(id) {
+      // show loading anim
       $loading.show();
-      // need a more robust image checker
-      function checkImages(i, callback) {
-        let url = 'https://abiomedtraining.com/ACE/2.0/decks/' + id + '/' + i + '.PNG';
-        const img = new Image();
-        img.onload = function () {
-          i++;
-          cache[id].push(url);
-          checkImages(i, callback);
-        }
-        img.onerror = function () {
-          return callback(cache[id]);
-        }
-        img.src = url;
-      }
-      // if the cache is empty pull images from server
-      if (cache[id].length === 0) {
-        let index = 1;
+      // retrieve # of slides for this deck
+      $.getJSON('https://abiomedtraining.com/ACE/2.0/decks/' + id + '/index.json')
+        .done(function(data) {
+          var slides = [];
+          console.log('Loading images...');
+          for (var i = 1; i <= data.slides.length; i++) {
+            let url = 'https://abiomedtraining.com/ACE/2.0/decks/' + id + '/' + i + '.PNG';
+            slides.push(url);
+            // create an Image so it can be loaded and cached
+            (function () {
+              const idx = i;
+              const img = new Image();
+              img.onload = function () {
+                console.log('image ', idx, 'loaded.');
+                if (idx === 1) {
+                  $loading.hide();
+                }
+              }
+              img.src = url;
+            })();
 
-        // janky callback on jankier recursive function to guaruntee slides are loaded
-        checkImages(index, function (slides) {
+          }
           const html = slideshowTemplate({ id, slides });
           prepareSlideshow(html);
-          $loading.hide();
         });
-      } else {
-        // otherwise pull from cache
-        const html = slideshowTemplate({ id, slides: cache[id] });
-        prepareSlideshow(html);
-        $loading.hide();
-      }
     }
 });
