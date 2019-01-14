@@ -32,13 +32,11 @@ $(function() {
 
     // hide sidebar until we populate slides
     $('label#category, li#category').each(function() {
+      $(this).hide();
       if ($(this).prop('tagName') === 'LI') {
-        $(this).hide();
         $(this).parents('.category-content').siblings('label').hide();
-      } else {
-        $(this).hide();
       }
-    })
+    });
 
     // fetch only the decks we've loaded
     const presentations = []
