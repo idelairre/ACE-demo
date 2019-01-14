@@ -1,11 +1,9 @@
-const { intersection } = require('lodash');
-
 const thumbnailTemplate = require('./templates/thumbnail.ejs');
 const slideshowTemplate = require('./templates/slideshow.ejs');
 const sidebarTemplate = require('./templates/sidebar.ejs');
 const videoThumbnailTemplate = require('./templates/videoThumbnail.ejs');
 
-//const videoTemplate = require('./templates/video.js');
+const videoTemplate = require('./templates/video.ejs');
 
 require('./js/jquery.cbpFWSlider');
 require('./styles/index.scss');
@@ -13,7 +11,6 @@ require('./styles/index.scss');
 const json = require('./contentMetaData.json');
 
 const $loading = $('#loadingCover').hide();
-
 
 $(function() {
 
@@ -53,6 +50,7 @@ $(function() {
         $('.content').append(thumbsHtml);
         // populate categories as we load slides
         $('label#category, li#category').each(function () {
+          // compare loaded slide against the json data
           const slides = $(this).data('content').split(',');
           if (slides.includes(json.content[i].vaultId)) {
             $(this).show();
@@ -68,13 +66,17 @@ $(function() {
       img.src = src;
     }
 
+    let $selected;
+
     // filter items
     $('label#category, li#category').each(function() {
         $(this).click(function() {
+            if ($selected) $selected.removeClass('selected');
+            $selected = $(this).addClass('selected');
             const slides = $(this).data('content');
             $('.large-thumb').each(function() {
                 if (!slides.includes($(this).data('slide'))) {
-                    $(this).fadeOut('250');
+                    $(this).hide();
                 } else {
                     $(this).show();
                 }
@@ -96,8 +98,10 @@ $(function() {
 
     // video slideshow
     $('#video').click(function () {
-      prepareSlideshow(videoTemplate);
-      $('.slider-container').show();
+      $.getJSON('https://abiomedtraining.com/ACE/2.0/video/index.json').done(function (res) {
+        prepareSlideshow(videoTemplate({ videos: res.videos }));
+        $('.slider-container').show();
+      });
     });
 
     // rendering for slideshow

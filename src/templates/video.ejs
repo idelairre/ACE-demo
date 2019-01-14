@@ -1,15 +1,15 @@
 <header>
-    <div>
+    <div id="close-btn">
         <a id="close-btn" href="#">x</a>
     </div>
 </header>
 <div id="cbp-fwslider" class="cbp-fwslider">
     <ul>
         <!-- Each child div in #showcase represents a slide -->
-        <% videos.forEach(function (video, i) { %>
+        <% videos.forEach(function (video) { %>
         <li>
             <video controls>
-                <source src="<%= video %>">
+                <source src="<%= 'https://abiomedtraining.com/ACE/2.0/video/' + video.id %>">
             </video>
         </li>
         <% }) %>
