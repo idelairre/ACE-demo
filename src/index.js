@@ -85,7 +85,7 @@ $(function() {
     });
 
     // undo filter
-    $('.header').click(function() {
+    $('.logo').click(function() {
       $('.large-thumb').show();
     });
 
@@ -109,6 +109,10 @@ $(function() {
       $('.slider-container').html(html);
       $('#cbp-fwslider').cbpFWSlider();
       $('#close-btn').click(function() {
+          // fixes bug where video keeps playing after slideshow is hidden and destroyed
+          if ($('video')) {
+            $('video').trigger('pause');
+          }
           $('.slider-container').hide();
           $('#cbp-fwslider').cbpFWSlider('destroy');
       });
