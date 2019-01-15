@@ -104,10 +104,19 @@ $(function() {
       });
     });
 
+    // slide change handler
+    const slideChanged = function(last, current) {
+      // just for now...
+      if ($('video')) {
+        $('video').trigger('pause');
+      }
+    };
+
     // rendering for slideshow
     const prepareSlideshow = function (html) {
       $('.slider-container').html(html);
-      $('#cbp-fwslider').cbpFWSlider();
+      $('#cbp-fwslider').cbpFWSlider({slideChangedCallback: slideChanged});
+
       $('#close-btn').click(function() {
           // fixes bug where video keeps playing after slideshow is hidden and destroyed
           if ($('video')) {
@@ -125,24 +134,31 @@ $(function() {
       $.getJSON('https://abiomedtraining.com/ACE/2.0/decks/' + id + '/index.json')
         .done(function(data) {
           var slides = [];
-          console.log('Loading images...');
+          console.log('Loading images... for ', id, data.slides.length, 'slides.');
           for (var i = 1; i <= data.slides.length; i++) {
-            let url = 'https://abiomedtraining.com/ACE/2.0/decks/' + id + '/' + i + '.PNG';
-            slides.push(url);
-            // create an Image so it can be loaded and cached
-            (function () {
-              const idx = i;
-              const img = new Image();
-              img.onload = function () {
-                console.log('image ', idx, 'loaded.');
-                if (idx === 1) {
-                  $loading.hide();
+            const rawSlide = data.slides[i-1];
+            const slide = {};
+            if (rawSlide.video) {
+              slide.videoUrl = 'https://abiomedtraining.com/ACE/2.0/video/' + rawSlide.video.id;
+            } else {
+              slide.imageUrl = 'https://abiomedtraining.com/ACE/2.0/decks/' + id + '/' + i + '.PNG';
+              // create an Image so it can be loaded and cached
+              (function () {
+                const idx = i;
+                const img = new Image();
+                img.onload = function () {
+                  console.log('image ', idx, 'loaded.');
+                  if ($loading.is(':visible')) {
+                    $loading.hide();
+                  }
                 }
-              }
-              img.src = url;
-            })();
+                img.src = slide.imageUrl;
+              })();              
+            }
 
+            slides.push(slide);
           }
+          console.log('now', slides);
           const html = slideshowTemplate({ id, slides });
           prepareSlideshow(html);
         });

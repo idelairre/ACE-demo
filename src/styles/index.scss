@@ -387,7 +387,10 @@ video {
 }
 
 .cbp-fwdots span {
+    color: black;
     display: inline-block;
+    font-size: 10px;
+    line-height: 18px;
     width: 18px;
     height: 18px;
     background: #ddd;

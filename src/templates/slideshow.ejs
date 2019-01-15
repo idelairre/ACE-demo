@@ -6,7 +6,14 @@
 <div id="cbp-fwslider" class="cbp-fwslider">
     <ul>
       <% slides.forEach(function (slide) { %>
-        <li><img src="<%= slide %>" alt="<%= id %>"/></li>
+      <li>
+      	<% if (slide.videoUrl) { %>
+      	<video controls>
+        	<source src="<%= slide.videoUrl %>">
+        </video>
+        <% } else { %>
+        <img src="<%= slide.imageUrl %>" alt="<%= id %>"/>
+        <% } %>
       <% }) %>
     </ul>
 </div>

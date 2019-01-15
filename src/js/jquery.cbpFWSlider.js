@@ -36,6 +36,8 @@
 			this._config();
 			// initialize/bind the events
 			this._initEvents();
+			// RCL hack
+			this._slideChangedCallback = options.slideChangedCallback;
 		},
 		_config : function() {
 
@@ -93,7 +95,8 @@
 				var dots = '';
 				for( var i = 0; i < this.itemsCount; ++i ) {
 					// current dot will have the class cbp-fwcurrent
-					var dot = i === this.current ? '<span class="cbp-fwcurrent"></span>' : '<span></span>';
+					var index = i+1;
+					var dot = i === this.current ? '<span class="cbp-fwcurrent">'+index+'</span>' : '<span>'+index+'</span>';
 					dots += dot;
 				}
 				var navDots = $( '<div class="cbp-fwdots"/>' ).append( dots ).appendTo( this.$el );
@@ -128,6 +131,10 @@
 			else if( direction === 'previous' && this.current > 0 ) {
 				--this.current;
 			}
+			if (this._slideChangedCallback) {
+				this._slideChangedCallback(this.old, this.current);	
+			}
+			
 			// slide
 			this._slide();
 
@@ -180,6 +187,10 @@
 			// update old and current values
 			this.old = this.current;
 			this.current = position;
+			// callback
+			if (this._slideChangedCallback) {
+				this._slideChangedCallback(this.old, this.current);	
+			}			
 			// slide
 			this._slide();
 
