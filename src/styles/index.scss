@@ -1,5 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
+.search-results {
+  width: 300px;
+  position: absolute;
+  background: white;
+  z-index: 100;
+  top: 137px;
+}
+
+.mdl-list__item-primary-content {
+  font-size: 12px;
+  cursor: pointer;
+}
+
 // new styles
 
 .mdl-card {
@@ -157,13 +170,13 @@ html {
     cursor: pointer;
 }
 
-input {
+.category > input {
     position: absolute;
     opacity: 0;
     z-index: -1;
 }
 
-label {
+.category > label {
     position: relative;
     display: block;
     padding: 0 0 0 1em;
@@ -198,11 +211,11 @@ label {
     margin: 8px 0;
 }
 /* :checked */
-input:checked ~ .category-content {
+.category > input:checked ~ .category-content {
     max-height: 26em;
 }
 /* Icon */
-label::after {
+.category > label::after {
     position: absolute;
     right: 0;
     top: 0;
@@ -216,11 +229,11 @@ label::after {
     transition: all 0.35s;
 }
 
-input[type=checkbox] + label::after {
+.category > input[type=checkbox] + label::after {
     content: "+";
 }
 
-input[type=checkbox]:checked + label::after {
+.category > input[type=checkbox]:checked + label::after {
     transform: rotate(315deg);
 }
 /* We rely on source order for mobile-first approach
