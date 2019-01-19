@@ -192,6 +192,10 @@ $(function() {
         const html = searchDropdown({ decks: found });
         $('.search-results').html(html);
         $('.search-results').show();
+        if ($('.search-results-category').not(':visible')) {
+          $('.search-results-category').data('content', found);
+          $('.search-results-category').show();
+        }
     });
 
     $('.search-results').hide();
@@ -207,6 +211,7 @@ $(function() {
     $(document).on('click', '.mdl-list__item', function() {
       const deck = $(this).children('.mdl-list__item-primary-content').data('deck');
       $('#search-expandable').val(deck);
+      $('.search-results-category').data('content', deck);
       $('div[data-deck]').each(function() {
         if ($(this).data('deck') !== deck) {
           $(this).hide();
@@ -214,5 +219,6 @@ $(function() {
           $(this).show();
         }
       });
+      $('.search-results').hide();
     });
 });
