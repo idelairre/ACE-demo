@@ -1,3 +1,5 @@
+const { find } = require('lodash');
+
 const thumbnailTemplate = require('./templates/thumbnail.ejs');
 const slideshowTemplate = require('./templates/slideshow.ejs');
 const sidebarTemplate = require('./templates/sidebar.ejs');
@@ -23,7 +25,7 @@ $(function() {
     }
 
     // add test video thumbnail
-    $('.content').prepend(videoThumbnailTemplate());
+    // $('.content').prepend(videoThumbnailTemplate());
 
     // load sidebar
     const sidebarHtml = sidebarTemplate({
@@ -181,14 +183,17 @@ $(function() {
         const found = [];
         const term = $(this).val().toLowerCase();
         $('[data-deck]').each(function() {
-            const deck = $(this).data('deck');
-            if (deck.toLowerCase().includes(term)) {
-                if (!found.includes(deck)) {
-                  found.push(deck);
-                }
+            const deck = $(this).data('deck-json');
+            const res = find(deck, function (data) {
+              return data.toString().toLowerCase().includes(term);
+            });
+            if (res) {
+              if (!found.includes(deck)) {
+                found.push(deck);
                 $(this).show();
+              }
             } else {
-                $(this).hide();
+              $(this).hide();
             }
         });
         const html = searchDropdown({ decks: found });
