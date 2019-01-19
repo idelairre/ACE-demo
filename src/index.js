@@ -183,7 +183,9 @@ $(function() {
         $('[data-deck]').each(function() {
             const deck = $(this).data('deck');
             if (deck.toLowerCase().includes(term)) {
-                found.push(deck);
+                if (!found.includes(deck)) {
+                  found.push(deck);
+                }
                 $(this).show();
             } else {
                 $(this).hide();
@@ -195,6 +197,12 @@ $(function() {
         if ($('.search-results-category').not(':visible')) {
           $('.search-results-category').data('content', found);
           $('.search-results-category').show();
+        }
+        if ($selected) {
+          $selected.removeClass('selected');
+          $selected = $('.search-results-category').addClass('selected');
+        } else {
+          $selected = $('.search-results-category').addClass('selected');
         }
     });
 
