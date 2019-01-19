@@ -194,6 +194,8 @@ $(function() {
         $('.search-results').show();
     });
 
+    $('.search-results').hide();
+
     $(document).click(function(event) {
         if (!$(event.target).closest('#search-expandable, .search-results').length) {
             if ($('.search-results').is(':visible')) {

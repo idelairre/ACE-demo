@@ -6,6 +6,8 @@
   background: white;
   z-index: 100;
   top: 137px;
+  overflow-y: scroll;
+  max-height: 400px;
 }
 
 .mdl-list__item-primary-content {
