@@ -1,15 +1,26 @@
 <section class="search" style="padding-left: 15px;">
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label">
-        <label class="mdl-button mdl-js-button mdl-button--icon" for="search-expandable">
-            <i class="material-icons">search</i>
-        </label>
-        <div class="mdl-textfield__expandable-holder">
-            <input class="mdl-textfield__input" type="text" id="search-expandable">
-            <label class="mdl-textfield__label" for="search-expandable">
-                Enter search text below
-            </label>
-        </div>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label">
+    <label class="mdl-button mdl-js-button mdl-button--icon" for="search-expandable">
+      <i class="material-icons">search</i>
+    </label>
+    <div class="mdl-textfield__expandable-holder">
+      <input class="mdl-textfield__input" type="text" id="search-expandable">
+      <label class="mdl-textfield__label" for="search-expandable">
+        Enter search text below
+      </label>
     </div>
-    <ul class="search-results mdl-list">
-    </ul>
+  </div>
+  <ul class="search-results mdl-list" style="display: none;">
+  </ul>
+  <div class="menu-right" style="float: right; padding: 20px;">
+    <button id="hide-menu" class="mdl-button mdl-js-button mdl-button--icon">
+      <i class="material-icons">chevron_left</i>
+    </button>
+    <button id="view-list" class="mdl-button mdl-js-button mdl-button--icon">
+      <i class="material-icons">view_list</i>
+    </button>
+    <button id="view-grid" class="mdl-button mdl-js-button mdl-button--icon">
+      <i class="material-icons">view_module</i>
+    </button>
+  </div>
 </section>

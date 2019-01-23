@@ -1,8 +1,8 @@
-  <% decks.forEach(function (deck) { %>
-    <li class="mdl-list__item mdl-list__item--two-line">
-        <span class="mdl-list__item-primary-content menu-deck" data-deck="<%= deck.vaultId %>">
-            <span><%= deck.vaultId %></span>
-            <span class="mdl-list__item-sub-title"><%= deck.filename %></span>
-        </span>
-    </li>
-  <% }) %>
+<% decks.forEach(function (deck) { %>
+  <li class="mdl-list__item mdl-list__item--two-line search-result-item">
+      <span class="mdl-list__item-primary-content menu-deck" data-deck="<%= deck.vaultId %>">
+          <span><%= deck.vaultId %></span>
+          <span class="mdl-list__item-sub-title"><%= deck.filename %></span>
+      </span>
+  </li>
+<% }) %>
